@@ -19,7 +19,7 @@ To run the application, download the app.py file. You can use the terminal in ma
 
 To start Vayu
 
-            python 3 app.py
+            python3 app.py
             
 Note: All the outputs (data files, figures and plots ) would be saved in the folder where the main python file is stored.
 
