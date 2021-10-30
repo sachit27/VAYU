@@ -22,3 +22,6 @@ To start Vayu
             python 3 app.py
             
 Note: All the outputs (data files, figures and plots ) would be saved in the folder where the main python file is stored.
+
+### Creating an Executable Program (EXE File)
+Another option to the use the toolbox is to create an executable program. This allows the user to use the application as a .exe file (Windows) or .dmg file (MacOS). The [tutorial](https://pythonbasics.org/compile-pyqt-to-exe/) on Python Basics explains how to compile PyQt to EXE.
