@@ -1,5 +1,3 @@
-# Author: Sachit Mahajan
-
 # Required  Packages
 import os
 from PyQt5 import QtCore, QtGui, QtWidgets
