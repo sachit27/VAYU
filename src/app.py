@@ -5,8 +5,6 @@ from PyQt5.QtWidgets import *
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
 from matplotlib.figure import Figure
 from PyQt5.QtCore import QSize
-
-
 from PyQt5 import QtWidgets
 from qt_material import apply_stylesheet
 
@@ -16,7 +14,6 @@ from datetime import datetime
 from pathlib import Path
 
 import plotly.express as px
-
 import matplotlib.pyplot as plt
 plt.style.use('seaborn')
 
@@ -238,7 +235,6 @@ class DataInterpolationWindow(QMainWindow):
 
 
     def fileOpener(self):
-
         fname = QFileDialog.getOpenFileName(filter="Comma Seperated Files (*.csv)")
         self.csvFileName = fname[0]
         self.selected_label.setText("Selected .csv File Path : " + str(fname[0]))
@@ -249,7 +245,7 @@ class DataInterpolationWindow(QMainWindow):
 
     def downloadFile(self):
 
-        ''' this function is used to download a file... '''
+        ''' Function for downloading the file '''
         if len(self.interpolated_data_frame) == 0:
             no_input_message_box = QMessageBox()
             no_input_message_box.setIcon(QMessageBox.Critical)
@@ -282,7 +278,7 @@ class DataInterpolationWindow(QMainWindow):
         return path
 
     def interpolation_action(self):
-        ''' this function is used to perform the interpolation action. '''
+        ''' Function for performing interpolation '''
         if len(self.csvFileName) == 0:
             no_input_message_box = QMessageBox()
             no_input_message_box.setIcon(QMessageBox.Critical)
