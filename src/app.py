@@ -1,3 +1,5 @@
+#The code has been tested for different operating systems. Make sure to install all the packages before executing the code.
+
 # Required  Packages
 import os
 from PyQt5 import QtCore, QtGui, QtWidgets
