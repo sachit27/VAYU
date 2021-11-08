@@ -1,7 +1,14 @@
 #The code has been tested for different operating systems. Make sure to install all the packages before executing the code.
+# List of required packages can be obtained from requirement.txt file
 
-# Required  Packages
 import os
+import pandas as pd
+import numpy as np
+import seaborn as sns
+import csv
+import plotly.express as px
+import matplotlib.pyplot as plt
+
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import *
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
@@ -9,19 +16,10 @@ from matplotlib.figure import Figure
 from PyQt5.QtCore import QSize
 from PyQt5 import QtWidgets
 from qt_material import apply_stylesheet
-
-import pandas as pd
-import csv
 from datetime import datetime
 from pathlib import Path
-
-import plotly.express as px
-import matplotlib.pyplot as plt
-plt.style.use('seaborn')
-
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
 from matplotlib.figure import Figure
-
 from sklearn.model_selection import train_test_split
 from sklearn.naive_bayes import GaussianNB
 from sklearn import metrics
@@ -31,11 +29,11 @@ from sklearn.metrics import mean_squared_error
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import roc_curve, auc
 from sklearn import metrics
-import numpy as np
-import seaborn as sns
+
+plt.style.use('seaborn') #For Seaborn style plots
 
 
-# Class to display plotting canvas
+# Class to display plotting canvas that will be used for showing plot ouputs from different methods
 class CorrelationCanvas(FigureCanvas):
     def __init__(self, parent = None, width = 11, height = 9, dpi = 130):
         fig = Figure(figsize=(width, height), dpi=dpi)
@@ -68,6 +66,7 @@ class Plotting_Canvas(FigureCanvas):
         FigureCanvas.__init__(self, fig)
         self.setParent(parent)
 
+# Code to create File Conversion workflow  
 # ---FileConversion class Starts---
 class FileConversion(QMainWindow):
     def __init__(self):
@@ -161,7 +160,8 @@ class FileConversion(QMainWindow):
 
 # ---FileConversion class Ends---
 
-# ---DataInterpolation class Starts----
+# Code to perform Data Interpolation workflow 
+# ---Data Interpolation class Starts----
 class DataInterpolationWindow(QMainWindow):
 
     def __init__(self):
@@ -301,6 +301,7 @@ class DataInterpolationWindow(QMainWindow):
             sucs_message_box.exec_()
 # ---DataInterpolation class Ends---
 
+# Code to create Data Aggregation workflow
 # ---Data Aggregation class Starts---
 class DataAggregation(QMainWindow):
     def __init__(self):
@@ -538,7 +539,7 @@ class DataAggregation(QMainWindow):
             da_no_file_input.exec_()
 # ---Data Aggregation class Ends---
 
-# Data Correlation Class starts
+# ---Data Correlation Class starts---
 class DataCorrelation(QMainWindow):
     def __init__(self):
         super().__init__()
@@ -594,8 +595,6 @@ class DataCorrelation(QMainWindow):
         data_correlation_browse_button = QtWidgets.QPushButton("Browse",self)
         data_correlation_browse_button.setGeometry(150, 70, 311, 31)
         data_correlation_browse_button.clicked.connect(self.fileOpener)
-
-
         data_correlation = QPushButton("Data Correlation",self)
         data_correlation.setGeometry(50, 140, 411, 31)
         data_correlation.clicked.connect(self.data_correlation_action)
@@ -603,8 +602,6 @@ class DataCorrelation(QMainWindow):
         self.data_correlation_back_btn = QPushButton("Back",self)
         self.data_correlation_back_btn.setGeometry(QtCore.QRect(30, 250, 121, 41))
         self.data_correlation_back_btn.clicked.connect(self.DataCorrelationBackButton)
-
-
 
         heading_label = QLabel("NOTE :- You must browse .csv file after performing Data Interpolation",self)
         heading_label.setGeometry(80, 30, 441, 21)
@@ -677,9 +674,9 @@ class DataCorrelation(QMainWindow):
                 data_corr_img_save.setText("You have successfully performed Spearman Data Correlation. Image save as data_corr_output_fig.png and Correlation Matrix is saves as data_correlation_matrix.txt")
 
             data_corr_img_save.exec_()
-# Data Correlation Class Ends
+#---Data Correlation Class Ends---
 
-# data File Plotting Class Start
+#---Data Plotting Class Start---
 
 class dataFilePlotting(QMainWindow):
     def __init__(self):
@@ -752,11 +749,8 @@ class dataFilePlotting(QMainWindow):
         self.file_x_comboBox = QComboBox(self)
         self.file_x_comboBox.setGeometry(250, 150, 271, 20)
         self.file_x_comboBox.adjustSize()
-
         self.comboBox = QComboBox(self)
         self.comboBox.setGeometry(250, 230, 271, 22)
-
-
         self.comboBox.addItem('Scatter Plot')
         self.comboBox.addItem('Line Plot')
         self.comboBox.addItem('Bar Plot')
@@ -819,14 +813,12 @@ class dataFilePlotting(QMainWindow):
 
         self.file_x_comboBox.clear()
         self.file_y_comboBox.clear()
-
         self.file_x_comboBox.addItems(list(df.columns))
         self.file_y_comboBox.addItems(list(df.columns))
 
     def sfp_action(self):
         if self.sfp_browse_file_flag == True:
             df = pd.read_csv(self.csvFileName)
-
             x_var = str(self.file_x_comboBox.currentText())
             y_var = str(self.file_y_comboBox.currentText())
 
@@ -887,8 +879,9 @@ class dataFilePlotting(QMainWindow):
             sfp_no_file_input.setText("Please input .csv file for dataset")
             sfp_no_file_input.exec_()
 
-# data File Plotting Class End
-# Linear Regression Class Start
+#---Data Plotting Class End--
+
+#---Linear Regression Class Start---
 
 class LinearRegression(QMainWindow):
     def __init__(self):
@@ -997,21 +990,17 @@ class LinearRegression(QMainWindow):
     def perform_linear_regression(self,X_variables,y_variable,X_axis,X_plot_var):
 
         model_output_list = []
-
         from sklearn.linear_model import LinearRegression
         from sklearn.metrics import mean_squared_error
 
         reg = LinearRegression()
-
         reg.fit(X_variables,y_variable)
         Y_pred = reg.predict(X_variables)
-
         r2_score = reg.score(X_variables , y_variable)
         model_output_list.append(r2_score)
 
 
         self.canvas.axes.clear()
-
         self.canvas.axes.scatter(X_axis,y_variable,c=['red'],label='Sample Data')
         self.canvas.axes.plot(X_axis,Y_pred,color='blue',label='Regression Line')
         self.canvas.axes.set_xlabel(X_plot_var)
@@ -1210,9 +1199,9 @@ class LinearRegression(QMainWindow):
         else:
             return True
 
-# Linear Regression Class End
+#---Linear Regression Class End---
 
-# Naive Bayes Class Start
+#---Naive Bayes Class Start---
 
 class NaiveBayesClassifier(QMainWindow):
     def __init__(self):
@@ -1262,11 +1251,8 @@ class NaiveBayesClassifier(QMainWindow):
 
         self.naive_bayes_browse_file_btn = QtWidgets.QPushButton("Browse",self)
         self.naive_bayes_browse_file_btn.setGeometry(QtCore.QRect(150, 70, 331, 31))
-
-
         self.naive_bayes_action_btn = QtWidgets.QPushButton("Run NB Classifier",self)
         self.naive_bayes_action_btn.setGeometry(QtCore.QRect(60, 330, 221, 41))
-
         self.label_4 = QtWidgets.QLabel("NOTE :- You must browse .csv file after performing Data Interpolation",self)
         self.label_4.setGeometry(QtCore.QRect(80, 30, 441, 21))
         font = QtGui.QFont()
@@ -1277,7 +1263,6 @@ class NaiveBayesClassifier(QMainWindow):
 
         self.naive_bayes_col_input_field = QtWidgets.QTextEdit(self)
         self.naive_bayes_col_input_field.setGeometry(QtCore.QRect(260, 140, 221, 31))
-
         self.label_6 = QtWidgets.QLabel("Enter Target Variable in dataset",self)
         self.label_6.setGeometry(QtCore.QRect(60, 150, 201, 21))
         font = QtGui.QFont()
@@ -1290,10 +1275,8 @@ class NaiveBayesClassifier(QMainWindow):
         self.naive_bayes_output_table.setGeometry(QtCore.QRect(60, 400, 331, 91))
         self.naive_bayes_output_table.setColumnCount(0)
         self.naive_bayes_output_table.setRowCount(0)
-
         self.naive_bayes_textField = QtWidgets.QPlainTextEdit(self)
         self.naive_bayes_textField.setGeometry(QtCore.QRect(60, 210, 271, 91))
-
         self.label_7 = QtWidgets.QLabel("Prediction Output",self)
         self.label_7.setGeometry(QtCore.QRect(60, 370, 201, 21))
         font = QtGui.QFont()
@@ -1304,14 +1287,12 @@ class NaiveBayesClassifier(QMainWindow):
         self.naive_bayes_back_btn = QtWidgets.QPushButton("Back",self)
         self.naive_bayes_back_btn.setGeometry(QtCore.QRect(60, 500, 111, 41))
         self.naive_bayes_back_btn.clicked.connect(self.NB_BackButton)
-
         self.label_8 = QtWidgets.QLabel("Enter Independent Variables in dataset. ",self)
         self.label_8.setGeometry(QtCore.QRect(60, 180, 241, 21))
         font = QtGui.QFont()
         font.setPointSize(10)
         font.setItalic(False)
         self.label_8.setFont(font)
-
         self.label_5 = QtWidgets.QLabel("NOTE :- How to enter Independent Variables in text area , you must click on HELP button",self)
         self.label_5.setGeometry(QtCore.QRect(60, 300, 441, 21))
         font = QtGui.QFont()
@@ -1333,7 +1314,6 @@ class NaiveBayesClassifier(QMainWindow):
         self.naive_bayes_output_table.setColumnCount(2)
         self.naive_bayes_output_table.setRowCount(1)
         self.naive_bayes_output_table.setItem(0,0, QTableWidgetItem("Model Accuracy"))
-
         self.naive_bayes_browse_file_btn.clicked.connect(self.naive_bayes_window_fileOpener)
         self.naive_bayes_action_btn.clicked.connect(self.naive_bayes_action)
         self.naive_bayes_help.clicked.connect(self.open_help_dialog_box)
@@ -1616,9 +1596,9 @@ class NaiveBayesClassifier(QMainWindow):
             naive_bayes_msgBox.setText("Please input .csv file for dataset and enter all values of Independent and Target variables. These values must needed to run Naive Bayes Classifier.")
             naive_bayes_msgBox.exec_()
 
-# Naive Bayes Class End
+#---Naive Bayes Class End---
 
-# Data Summary Class Start
+#---Data Summary Class Start---
 class DataSummary(QMainWindow):
 
     def __init__(self):
@@ -1664,10 +1644,8 @@ class DataSummary(QMainWindow):
 
         self.data_sumr_browse = QtWidgets.QPushButton("Browse",self)
         self.data_sumr_browse.setGeometry(QtCore.QRect(150, 70, 311, 31))
-
         self.data_sumrzt = QtWidgets.QPushButton("Summarization",self)
         self.data_sumrzt.setGeometry(QtCore.QRect(290, 190, 171, 31))
-
         self.data_summary_back_btn = QtWidgets.QPushButton("Back",self)
         self.data_summary_back_btn.setGeometry(QtCore.QRect(60, 380, 121, 41))
         self.data_summary_back_btn.clicked.connect(self.DataSummaryBackButton)
@@ -1678,7 +1656,6 @@ class DataSummary(QMainWindow):
         font.setPointSize(10)
         font.setItalic(False)
         self.heading_label.setFont(font)
-
         self.col_input_field = QtWidgets.QTextEdit(self)
         self.col_input_field.setGeometry(QtCore.QRect(60, 190, 221, 31))
 
@@ -1696,7 +1673,6 @@ class DataSummary(QMainWindow):
         font.setItalic(False)
         self.label_6.setFont(font)
         self.label_6.setObjectName("label_6")
-
         self.label_7 = QtWidgets.QLabel("Output details of Data Summarization",self)
         self.label_7.setGeometry(QtCore.QRect(60, 240, 401, 21))
         font = QtGui.QFont()
@@ -1711,7 +1687,7 @@ class DataSummary(QMainWindow):
         self.output_table.setRowCount(0)
 
         self.data_sumr_browse.clicked.connect(self.data_summary_window_fileOpener)
-        # self.data_sumrzt.setText(_translate("MainWindow", "Data Summarization"))
+        self.data_sumrzt.setText(_translate("MainWindow", "Data Summarization"))
         self.data_sumrzt.clicked.connect(self.data_summarization_action)
 
         self.output_table.setColumnCount(2)
@@ -1804,8 +1780,9 @@ class DataSummary(QMainWindow):
                 data_summary_invalid_col.setText("This column is not found inside dataset file. Please enter correct column name.")
                 data_summary_invalid_col.exec_()
 
-# Data Summart Class End
+#---Data Summart Class End---
 
+#--For main window of User Interface--
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
@@ -1860,8 +1837,6 @@ class Ui_MainWindow(object):
         font.setItalic(False)
         self.label_2.setFont(font)
         self.label_2.setObjectName("label_2")
-                # self.pushButton_2.setText(_translate("MainWindow", "Data Summarization"))
-
         self.data_summary_btn = QtWidgets.QPushButton(self.centralwidget)
         self.data_summary_btn.setGeometry(QtCore.QRect(20, 320, 191, 41))
         font = QtGui.QFont()
@@ -1899,8 +1874,6 @@ class Ui_MainWindow(object):
         font.setPointSize(10)
         font.setItalic(False)
         self.naive_bayes_button.setFont(font)
-        # self.naive_bayes_button.setObjectName("pushButton_5")
-
         self.label_4 = QtWidgets.QLabel(self.centralwidget)
         self.label_4.setGeometry(QtCore.QRect(560, 190, 101, 31))
         font = QtGui.QFont()
@@ -1932,7 +1905,6 @@ class Ui_MainWindow(object):
         font.setItalic(False)
         self.fileConversion_button.setFont(font)
         self.fileConversion_button.setObjectName("fileConversion_button")
-
 
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(MainWindow)
@@ -2030,6 +2002,6 @@ if __name__ == "__main__":
     MainWindow = QtWidgets.QMainWindow()
     ui = Ui_MainWindow()
     ui.setupUi(MainWindow)
-    apply_stylesheet(app, theme='dark_teal.xml')
+    apply_stylesheet(app, theme='dark_teal.xml') #Different themes can be chosen from PyQT5 stylsheets
     MainWindow.show()
     sys.exit(app.exec_())
