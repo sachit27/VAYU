@@ -655,9 +655,11 @@ class DataCorrelation(QMainWindow):
             corr.to_csv('correlation_matrix.csv')
 
 
-            plt.figure(figsize=(13, 13))
-            data_corr_map = sns.heatmap(corr, vmin=-1, vmax=1, annot=True, cmap='BrBG')
+            plt.figure(figsize=(18.5, 18.5))
+            sns.set(font_scale=1.3)
+            data_corr_map = sns.heatmap(corr, vmin=-1, vmax=1, annot=True, annot_kws={"size": 20}, cmap='BrBG')
             data_corr_map.figure.savefig('data_corr_output_fig.png')
+            data_corr_map.figure.savefig('data_corr_output.pdf')
             data_corr_img_save = QMessageBox()
             data_corr_img_save.setIcon(QMessageBox.Information)
             data_corr_img_save.setWindowTitle("Message")
@@ -1494,13 +1496,12 @@ class NaiveBayesClassifier(QMainWindow):
         plt.figure(figsize=(10,10))
         plt.title('ROC curve')
         plt.plot(fpr_gnb, tpr_gnb, color='red',label = 'AUC_NB = %0.2f' % roc_auc)
-        plt.plot(fpr_lr, tpr_lr, color='green',label = 'AUC_LR = %0.2f' % roc_auc_lr)
         plt.legend(loc = 'lower right')
         plt.plot([0, 1], [0, 1],linestyle='--')
         plt.axis('tight')
         plt.ylabel('True Positive Rate')
         plt.xlabel('False Positive Rate')
-        self.plotting_file_name = 'roc curve' +str(gnb)+'.png'
+        self.plotting_file_name = 'roc curve' +str(gnb)+'.pdf'
         plt.savefig(self.plotting_file_name)
 
         plt.figure(figsize=(10,10))
@@ -1512,7 +1513,7 @@ class NaiveBayesClassifier(QMainWindow):
         plt.axis('tight')
         plt.ylabel('True Positive Rate')
         plt.xlabel('False Positive Rate')
-        self.plotting_file_name = 'roc curve_compare.png'
+        self.plotting_file_name = 'roc curve_compare.pdf'
         plt.savefig(self.plotting_file_name)
 
         class_names=[0,1] # name  of classes
@@ -1529,7 +1530,7 @@ class NaiveBayesClassifier(QMainWindow):
         plt.ylabel('Actual label')
         plt.xlabel('Predicted label')
 
-        self.plotting_file_name = 'matrix.png'
+        self.plotting_file_name = 'matrix.pdf'
         plt.savefig(self.plotting_file_name)
 
         t_n_p_data.append(y_pred)
