@@ -27,4 +27,4 @@ Note: All the outputs (data files, figures and plots ) would be saved in the fol
 Another option to the use the toolbox is to create an executable program. This allows the user to use the application as a .exe file (Windows) or .dmg file (MacOS). The [tutorial](https://pythonbasics.org/compile-pyqt-to-exe/) on Python Basics explains how to compile PyQt to EXE.
 
 ### More details about the design and development of this toolbox
-For more details about this toolbox, refer to this [paper](https://www.mdpi.com/1424-8220/21/22/7726#metrics) published in [Sensors Journal](https://www.mdpi.com/1424-8220/21/22/7726#metrics).
+For more details about this toolbox, refer to this [paper](https://www.mdpi.com/1424-8220/21/22/7726) published in [Sensors Journal](https://www.mdpi.com/1424-8220/21/22/7726).
